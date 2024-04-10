@@ -23,8 +23,9 @@ public class DC_PatrolRoutine extends Routine
     Random random = new Random();
     //int numberOfQuestsToUse = 100;
     int tripNumber = 0;
-    int numberOfTripsToDo = 120;
+    int numberOfTripsToDo = 100;
     int numberOftripsSinceDiseaseCured = 0;
+    boolean shouldCureStatuses = false;
     
     //The top left most pixel of the game frame. Used as a reference to find the other pixels
     //Game should be set to 100% zoom, not 150% or 200%
@@ -45,6 +46,9 @@ public class DC_PatrolRoutine extends Routine
     
     int patrolX = osX + 211;
     int patrolY = osY + 200;
+    
+    int spelunkX = osX + 352;
+    int spelunkY = osY + 220;
 
     int invBarX = osX + 399;
     int invBarY = osY + 308;
@@ -117,9 +121,15 @@ public class DC_PatrolRoutine extends Routine
                     HealIfNotFullLife();
                     if (numberOftripsSinceDiseaseCured >= 10) {
                         //CureStatuses();
-                        UseFirstItem();
+                        shouldCureStatuses = true;
                     }
                     
+                    if (shouldCureStatuses) {
+                        UseFirstItem();
+                        shouldCureStatuses = false;
+                    }
+                    
+                    //ClickSpelunk();
                     ClickPatrol();
                     //ClickDunjeon();
                     if (IsInDialogueScreen()) {
@@ -397,6 +407,43 @@ public class DC_PatrolRoutine extends Routine
         }
         
         //Click patrol map icon;
+        bot.mouseMove(spelunkX, spelunkY);
+        bot.delay(250);
+        bot.mouseClick();
+        
+        /*
+        //Added below as a patch to an issue with the game, but seems resolved now. 
+        bot.delay(50);
+        bot.mouseClick();
+        bot.delay(50);
+        bot.mouseClick();
+        bot.delay(50);
+        bot.mouseClick();
+        bot.delay(50);
+        bot.mouseClick();
+        bot.delay(50);
+        */
+        
+        //Check if still in caves screen
+        Boolean isStillInCavesScreen = true;
+        for (int i = 0; i < 20; i++) {
+            isStillInCavesScreen = IsInCaves();
+            if (isStillInCavesScreen) {
+                bot.delay(250);
+            }
+        }
+        
+        if (isStillInCavesScreen) {
+            throw new Exception("Unable verify if moved past caves screen. ");
+        }
+    }
+    
+    private void ClickSpelunk() throws Exception {
+        if (!IsInCaves()) {
+            throw new Exception("Could not click spelunk, unable to detect caves screen. ");
+        }
+        
+        //Click patrol map icon;
         bot.mouseMove(patrolX, patrolY);
         bot.delay(250);
         bot.mouseClick();
@@ -562,7 +609,40 @@ public class DC_PatrolRoutine extends Routine
             //System.out.println("coords: " + x + ", " + y);
             return coords;
         } else {
-            throw new Exception("Unable to find the first combat option on the combat screen. ");
+            UseFirstItem(); //Likely panicked if it doesnt find first time, can cure it
+            //Start again
+            //Need to move mouse away from text area incase it highlights and changes text colour
+            bot.mouseMove(bgColorCheckX, bgColorCheckY);
+            
+            x = combatTopOfOptionBoxX;
+            y = combatTopOfOptionBoxY;
+
+            for (int i = 0; i < 50; i++) {
+                int red = bot.getPixelColor(x, y).getRed();
+                int green = bot.getPixelColor(x, y).getGreen();
+                int blue = bot.getPixelColor(x, y).getBlue();
+
+                if (red == 0 && green == 0 && blue == 0) {
+                        textColourFound = true;
+                        break;
+                }
+
+                //For if the top option is still highlighted
+                if (red == 255 && green == 0 && blue == 0) {
+                    textColourFound = true;
+                break;
+                }
+                x++;
+                y++;
+                y++;
+            }
+            if (textColourFound) {
+                int[] coords = {x,y};
+                //System.out.println("coords: " + x + ", " + y);
+                return coords;
+            } else {
+                throw new Exception("Unable to find the first combat option on the combat screen. ");
+            }
         }
     }
     
@@ -629,6 +709,70 @@ public class DC_PatrolRoutine extends Routine
         }
     }
     
+    private Boolean EnemyIsDwarf() throws Exception {
+        if (!IsInMainCombatScreen()) {
+            throw new Exception("Unable to detect enemy, main combat screen not detected. ");
+        }
+        
+        // This section below are coordinates for checking unique identifiers from certain enemies
+        int dwarfX1 = osX + 40; //884, 414   248 248 240
+        int dwarfY1 = osY + 48;
+        int dwarfX2 = osX + 76; //
+        int dwarfY2 = osY + 48;
+        int dwarfX3 = osX + 115; //
+        int dwarfY3 = osY + 52;
+        int dwarfX4 = osX + 165; //
+        int dwarfY4 = osY + 79;
+        
+        Boolean coord1Matches = false;
+        Boolean coord2Matches = false;
+        Boolean coord3Matches = false;
+        Boolean coord4Matches = false;
+        
+        int enemyRed = bot.getPixelColor(dwarfX1, dwarfY1).getRed();
+        int enemyGreen = bot.getPixelColor(dwarfX1, dwarfY1).getGreen();
+        int enemyBlue = bot.getPixelColor(dwarfX1, dwarfY1).getBlue();
+        
+        System.out.println(dwarfX1 + ", " + dwarfY1 + ": " + enemyRed + "/" + enemyGreen + "/" + enemyBlue);
+        if (enemyRed == 145 && enemyGreen == 114 && enemyBlue == 83) {
+            coord1Matches = true;
+        }
+        
+        enemyRed = bot.getPixelColor(dwarfX2, dwarfY2).getRed();
+        enemyGreen = bot.getPixelColor(dwarfX2, dwarfY2).getGreen();
+        enemyBlue = bot.getPixelColor(dwarfX2, dwarfY2).getBlue();
+        
+        System.out.println(dwarfX2 + ", " + dwarfY2 + ": " + enemyRed + "/" + enemyGreen + "/" + enemyBlue);
+        if (enemyRed == 206 && enemyGreen == 99 && enemyBlue == 47) {
+            coord2Matches = true;
+        }
+        
+        enemyRed = bot.getPixelColor(dwarfX3, dwarfY3).getRed();
+        enemyGreen = bot.getPixelColor(dwarfX3, dwarfY3).getGreen();
+        enemyBlue = bot.getPixelColor(dwarfX3, dwarfY3).getBlue();
+        
+        System.out.println(dwarfX3 + ", " + dwarfY3 + ": " + enemyRed + "/" + enemyGreen + "/" + enemyBlue);
+        if (enemyRed == 96 && enemyGreen == 9 && enemyBlue == 0) {
+            coord3Matches = true;
+        }
+        
+        enemyRed = bot.getPixelColor(dwarfX4, dwarfY4).getRed();
+        enemyGreen = bot.getPixelColor(dwarfX4, dwarfY4).getGreen();
+        enemyBlue = bot.getPixelColor(dwarfX4, dwarfY4).getBlue();
+        
+        System.out.println(dwarfX4 + ", " + dwarfY4 + ": " + enemyRed + "/" + enemyGreen + "/" + enemyBlue);
+        if (enemyRed == 4 && enemyGreen == 0 && enemyBlue == 13) {
+            coord4Matches = true;
+        }
+        
+        if (coord1Matches && coord2Matches && coord3Matches && coord4Matches) {
+            System.out.println();
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
     private Boolean EnemyIsGang() throws Exception {
         if (!IsInMainCombatScreen()) {
             throw new Exception("Unable to detect enemy, main combat screen not detected. ");
@@ -682,6 +826,136 @@ public class DC_PatrolRoutine extends Routine
         
         System.out.println(gangX4 + ", " + gangY4 + ": " + enemyRed + "/" + enemyGreen + "/" + enemyBlue);
         if (enemyRed == 240 && enemyGreen == 240 && enemyBlue == 142) {
+            coord4Matches = true;
+        }
+        
+        if (coord1Matches && coord2Matches && coord3Matches && coord4Matches) {
+            System.out.println();
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    private Boolean EnemyIsMushroom() throws Exception {
+        if (!IsInMainCombatScreen()) {
+            throw new Exception("Unable to detect enemy, main combat screen not detected. ");
+        }
+        
+        // This section below are coordinates for checking unique identifiers from certain enemies
+        int mushroomX1 = osX + 40; //884, 414   248 248 240
+        int mushroomY1 = osY + 48;
+        int mushroomX2 = osX + 76; //
+        int mushroomY2 = osY + 48;
+        int mushroomX3 = osX + 115; //
+        int mushroomY3 = osY + 52;
+        int mushroomX4 = osX + 165; //
+        int mushroomY4 = osY + 79;
+        
+        Boolean coord1Matches = false;
+        Boolean coord2Matches = false;
+        Boolean coord3Matches = false;
+        Boolean coord4Matches = false;
+        
+        int enemyRed = bot.getPixelColor(mushroomX1, mushroomY1).getRed();
+        int enemyGreen = bot.getPixelColor(mushroomX1, mushroomY1).getGreen();
+        int enemyBlue = bot.getPixelColor(mushroomX1, mushroomY1).getBlue();
+        
+        System.out.println("For Mushroom");
+        System.out.println(mushroomX1 + ", " + mushroomY1 + ": " + enemyRed + "/" + enemyGreen + "/" + enemyBlue);
+        if (enemyRed == 9 && enemyGreen == 0 && enemyBlue == 23) {
+            coord1Matches = true;
+        }
+        
+        enemyRed = bot.getPixelColor(mushroomX2, mushroomY2).getRed();
+        enemyGreen = bot.getPixelColor(mushroomX2, mushroomY2).getGreen();
+        enemyBlue = bot.getPixelColor(mushroomX2, mushroomY2).getBlue();
+        
+        System.out.println(mushroomX2 + ", " + mushroomY2 + ": " + enemyRed + "/" + enemyGreen + "/" + enemyBlue);
+        if (enemyRed == 206 && enemyGreen == 188 && enemyBlue == 150) {
+            coord2Matches = true;
+        }
+        
+        enemyRed = bot.getPixelColor(mushroomX3, mushroomY3).getRed();
+        enemyGreen = bot.getPixelColor(mushroomX3, mushroomY3).getGreen();
+        enemyBlue = bot.getPixelColor(mushroomX3, mushroomY3).getBlue();
+        
+        System.out.println(mushroomX3 + ", " + mushroomY3 + ": " + enemyRed + "/" + enemyGreen + "/" + enemyBlue);
+        if (enemyRed == 252 && enemyGreen == 222 && enemyBlue == 162) {
+            coord3Matches = true;
+        }
+        
+        enemyRed = bot.getPixelColor(mushroomX4, mushroomY4).getRed();
+        enemyGreen = bot.getPixelColor(mushroomX4, mushroomY4).getGreen();
+        enemyBlue = bot.getPixelColor(mushroomX4, mushroomY4).getBlue();
+        
+        System.out.println(mushroomX4 + ", " + mushroomY4 + ": " + enemyRed + "/" + enemyGreen + "/" + enemyBlue);
+        if (enemyRed == 3 && enemyGreen == 0 && enemyBlue == 11) {
+            coord4Matches = true;
+        }
+        
+        if (coord1Matches && coord2Matches && coord3Matches && coord4Matches) {
+            System.out.println();
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    private Boolean EnemyIsSiren() throws Exception {
+        if (!IsInMainCombatScreen()) {
+            throw new Exception("Unable to detect enemy, main combat screen not detected. ");
+        }
+        
+        // This section below are coordinates for checking unique identifiers from certain enemies
+        int sirenX1 = osX + 40; //884, 414   248 248 240
+        int sirenY1 = osY + 48;
+        int sirenX2 = osX + 76; //
+        int sirenY2 = osY + 48;
+        int sirenX3 = osX + 115; //
+        int sirenY3 = osY + 52;
+        int sirenX4 = osX + 165; //
+        int sirenY4 = osY + 79;
+        
+        Boolean coord1Matches = false;
+        Boolean coord2Matches = false;
+        Boolean coord3Matches = false;
+        Boolean coord4Matches = false;
+        
+        int enemyRed = bot.getPixelColor(sirenX1, sirenY1).getRed();
+        int enemyGreen = bot.getPixelColor(sirenX1, sirenY1).getGreen();
+        int enemyBlue = bot.getPixelColor(sirenX1, sirenY1).getBlue();
+        
+        System.out.println("For Siren");
+        System.out.println(sirenX1 + ", " + sirenY1 + ": " + enemyRed + "/" + enemyGreen + "/" + enemyBlue);
+        if (enemyRed == 81 && enemyGreen == 88 && enemyBlue == 96) {
+            coord1Matches = true;
+        }
+        
+        enemyRed = bot.getPixelColor(sirenX2, sirenY2).getRed();
+        enemyGreen = bot.getPixelColor(sirenX2, sirenY2).getGreen();
+        enemyBlue = bot.getPixelColor(sirenX2, sirenY2).getBlue();
+        
+        System.out.println(sirenX2 + ", " + sirenY2 + ": " + enemyRed + "/" + enemyGreen + "/" + enemyBlue);
+        if (enemyRed == 90 && enemyGreen == 101 && enemyBlue == 97) {
+            coord2Matches = true;
+        }
+        
+        enemyRed = bot.getPixelColor(sirenX3, sirenY3).getRed();
+        enemyGreen = bot.getPixelColor(sirenX3, sirenY3).getGreen();
+        enemyBlue = bot.getPixelColor(sirenX3, sirenY3).getBlue();
+        
+        System.out.println(sirenX3 + ", " + sirenY3 + ": " + enemyRed + "/" + enemyGreen + "/" + enemyBlue);
+        if (enemyRed == 71 && enemyGreen == 86 && enemyBlue == 93) {
+            coord3Matches = true;
+        }
+        
+        enemyRed = bot.getPixelColor(sirenX4, sirenY4).getRed();
+        enemyGreen = bot.getPixelColor(sirenX4, sirenY4).getGreen();
+        enemyBlue = bot.getPixelColor(sirenX4, sirenY4).getBlue();
+        
+        System.out.println(sirenX4 + ", " + sirenY4 + ": " + enemyRed + "/" + enemyGreen + "/" + enemyBlue);
+        if (enemyRed == 21 && enemyGreen == 27 && enemyBlue == 39) {
             coord4Matches = true;
         }
         
@@ -894,13 +1168,18 @@ public class DC_PatrolRoutine extends Routine
         }
 
         //Running away assumes enemy does not pursue. 
-        if (EnemyIsMagmaDragon() || EnemyIsGang()) {
+        if (EnemyIsMagmaDragon() || EnemyIsGang() || EnemyIsDwarf() || EnemyIsMushroom()) {
             RunAway();
             ClickPastDialogueScreen();
             return;
         }
         
-        int timesToTryAttacking = 5;
+        //These enemys usually cause panic and need to be cured after combat. 
+        if (EnemyIsSiren()) {
+            shouldCureStatuses = true;
+        }
+        
+        int timesToTryAttacking = 8;
         for (int i = 0; i < timesToTryAttacking; i++) {
             if (IsInCaves() || IsDead() || IsInCastle()) {
                 return;
