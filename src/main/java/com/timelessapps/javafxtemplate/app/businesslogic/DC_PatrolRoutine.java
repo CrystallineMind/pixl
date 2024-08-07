@@ -1167,8 +1167,8 @@ public class DC_PatrolRoutine extends Routine
             throw new Exception("Unable to handle combat, main combat screen not detected. ");
         }
 
-        //Running away assumes enemy does not pursue. 
-        if (EnemyIsMagmaDragon() || EnemyIsGang() || EnemyIsDwarf() || EnemyIsMushroom()) {
+        //Running away assumes enemy does not pursue. EnemyIsMagmaDragon() 
+        if (EnemyIsGang() || EnemyIsDwarf() || EnemyIsMushroom()) {
             RunAway();
             ClickPastDialogueScreen();
             return;
