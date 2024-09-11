@@ -14,7 +14,7 @@ import main.java.com.timelessapps.javafxtemplate.helpers.services.CustomSceneHel
 import main.java.com.timelessapps.javafxtemplate.helpers.services.LoggingService;
 import main.java.com.timelessapps.javafxtemplate.helpers.services.RobotService;
 
-public class SplashRoutine extends Routine {
+public class MBRoutine extends Routine {
 	RobotService bot = new RobotService();
 	LoggingService log = new LoggingService();
 	Random random = new Random();
@@ -38,10 +38,14 @@ public class SplashRoutine extends Routine {
 	int bookIndicatorX = 1313;
 	int bookIndicatorY = 518;
 
+        // Last inventory slot should have an item like fire rune to indicate whether you died or not
+        int lastInvX = 1587;
+        int lastInvY = 986;
+
 	volatile Boolean bookStillLoading = true;
 	int counter = 0;
 
-	public SplashRoutine() throws AWTException {
+	public MBRoutine() throws AWTException {
 
 	}
 
@@ -53,20 +57,65 @@ public class SplashRoutine extends Routine {
 
 		synchronized (this) {
 			try {
-				disableSplashButton();
+				disableMBButton();
 				Random random = new Random();
 
 				while (running) {
 					checkIfPausedOrStopped();
 					/** Start routine here. **/
+
+                                        //1587 986 rgb 146 17 9 with fire rune with runelite exp tab open
+                                        //1587 986 rgb 64 56 45 empty with runelite exp tab open
+                                        //Make sure fire rune is in last inventory slot
+                                        //Check if fire rune is still there. If not, then probably got pked
+                                        int currentRed = bot.getPixelColor(lastInvX, lastInvY).getRed();
+                                        int currentGreen = bot.getPixelColor(lastInvX, lastInvY).getGreen();
+                                        int currentBlue = bot.getPixelColor(lastInvX, lastInvY).getBlue();
+
+                                        if (currentRed < 100) {
+                                            System.out.println("Cannot detect item in last inv slot. Stopping. ");
+                                            Thread.sleep(25000);
+                                            break;
+                                        }
+                                        //Random sleeps for breaks
 					int randomNumber = random.nextInt(27);
-					String randomLetter = getRandomLetter(randomNumber);
-					bot.type(randomLetter, random.nextInt(15) + 35);
-					counter++;
-					System.out.println("Typed letter. ");
-					//Thread.sleep(random.nextInt(120000) + 120000);
-					TimeUnit.MINUTES.sleep(4);
-					Thread.sleep(random.nextInt(30000) + 10000);
+                                        if (randomNumber > 23) {
+                                            Thread.sleep(random.nextInt(30000) + 10000);
+                                        }
+
+                                        bot.mouseClick();
+					bot.delay(random.nextInt(200) + 500);
+
+                                        bot.mouseClick();
+					bot.delay(random.nextInt(300) + 300);
+
+                                        bot.mouseClick();
+					bot.delay(random.nextInt(240) + 800);
+
+                                        bot.mouseClick();
+					bot.delay(random.nextInt(120) + 700);
+
+                                        bot.mouseClick();
+					bot.delay(random.nextInt(250) + 240);
+
+                                        if (randomNumber > 10) {
+                                            bot.mouseClick();
+                                            bot.delay(random.nextInt(240) + 400);
+                                        }
+
+                                        if (randomNumber > 10) {
+                                            bot.mouseClick();
+                                            bot.delay(random.nextInt(350) + 600);
+                                        }
+
+
+                                        if (randomNumber > 10) {
+                                            bot.mouseClick();
+                                            bot.delay(random.nextInt(400) + 750);
+                                        }
+
+                                        System.out.println("Clicked " + counter);
+                                        counter++;
 					checkIfPausedOrStopped();
 				}
 			} catch (InterruptedException ex) {
@@ -77,35 +126,35 @@ public class SplashRoutine extends Routine {
 
 	@Override
 	public void checkIfPausedOrStopped() throws InterruptedException {
-		if (counter > 45) {
+		if (counter > 500) {
 			System.out.println("Counter is: " + counter + ". Stopping routine. ");
 			running = false;
 		}
 
 		waitIfPaused();
 		if (!running) {
-			enableSplashButton();
+			enableMBButton();
 		}
 
 	}
 
-	private void disableSplashButton() {
+	private void disableMBButton() {
 		try {
 			CustomSceneHelper sceneHelper = new CustomSceneHelper();
-			sceneHelper.getNodeById("splashButton").setDisable(true);
+			sceneHelper.getNodeById("mbButton").setDisable(true);
 		}
 		catch (Exception e) {
-			System.out.println("Could not disable splash button: " + e);
+			System.out.println("Could not disable mb button: " + e);
 		}
 	}
 
-	private void enableSplashButton() {
+	private void enableMBButton() {
 		try {
 			CustomSceneHelper sceneHelper = new CustomSceneHelper();
-			sceneHelper.getNodeById("splashButton").setDisable(false);
+			sceneHelper.getNodeById("mbButton").setDisable(false);
 		}
 		catch (Exception e) {
-			System.out.println("Could not enable splash button: " + e);
+			System.out.println("Could not enable mb button: " + e);
 		}
 	}
 

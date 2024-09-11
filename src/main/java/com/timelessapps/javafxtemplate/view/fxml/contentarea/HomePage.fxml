@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="homePage" fx:id="homePage" prefHeight="362.0" prefWidth="440.0" style="-fx-background-color: #1E1F23;" styleClass="homePage" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.com.timelessapps.javafxtemplate.controllers.contentarea.HomePageController">
+<AnchorPane id="homePage" fx:id="homePage" prefHeight="362.0" prefWidth="440.0" style="-fx-background-color: #1E1F23;" styleClass="homePage" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.com.timelessapps.javafxtemplate.controllers.contentarea.HomePageController">
     <stylesheets>
         <URL value="@/main/java/com/timelessapps/javafxtemplate/view/css/contentarea/HomePage.css" />
     </stylesheets>
@@ -41,6 +41,11 @@
          </font>
       </Button>
       <Button id="patrolButton" fx:id="patrolButton" layoutX="73.0" layoutY="251.0" mnemonicParsing="false" onMouseClicked="#startPatrolRoutine" prefHeight="58.0" prefWidth="135.0" styleClass="patrolButton" text="DC_Patrol">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button id="mbButton" fx:id="mbButton" layoutX="248.0" layoutY="251.0" mnemonicParsing="false" onMouseClicked="#startMBRoutine" prefHeight="58.0" prefWidth="135.0" styleClass="mbButton" text="MB">
          <font>
             <Font size="18.0" />
          </font>
