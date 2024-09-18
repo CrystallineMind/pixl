@@ -23,7 +23,7 @@ public class HighAlchRoutine extends Routine {
 
 	// For arrows, remember to include more in inv than stated number, otherwise
 	// stack will shrink and pixel detector may be off.
-	int numberToAlch = 400;
+	int numberToAlch = 97;
 	int alchX = 1372; // 1369
 	int alchY = 520; // 546
 
@@ -105,9 +105,9 @@ public class HighAlchRoutine extends Routine {
                                             break;
                                         }
                                         bot.mouseClick();
-					bot.delay(random.nextInt(5) + 5);
+					bot.delay(random.nextInt(754) + 643);
 					bot.mouseClick();
-					bot.delay(random.nextInt(5) + 5);
+					bot.delay(random.nextInt(800) + 550);
                                         
 					numberToAlch--;
                                         

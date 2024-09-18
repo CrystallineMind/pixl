@@ -126,7 +126,7 @@ public class MBRoutine extends Routine {
 
 	@Override
 	public void checkIfPausedOrStopped() throws InterruptedException {
-		if (counter > 500) {
+		if (counter > 400) {
 			System.out.println("Counter is: " + counter + ". Stopping routine. ");
 			running = false;
 		}
