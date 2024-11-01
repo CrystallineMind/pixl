@@ -16,14 +16,13 @@ import main.java.com.timelessapps.javafxtemplate.helpers.services.CustomSceneHel
 import main.java.com.timelessapps.javafxtemplate.helpers.services.LoggingService;
 import main.java.com.timelessapps.javafxtemplate.helpers.services.RobotService;
 
-public class HighAlchRoutine extends Routine {
+public class CalcifiedRoutine extends Routine {
 	RobotService bot = new RobotService();
 	LoggingService log = new LoggingService();
 	Random random = new Random();
 
-	// For arrows, remember to include more in inv than stated number, otherwise
-	// stack will shrink and pixel detector may be off.
-	int numberToAlch = 185;
+	// Run in main monitor, runelite exp tab showing. 
+	int numberToAlch = 179;
 	int alchX = 1372; // 1369
 	int alchY = 520; // 546
 
@@ -42,7 +41,7 @@ public class HighAlchRoutine extends Routine {
 
 	volatile Boolean bookStillLoading = true;
 
-	public HighAlchRoutine() throws AWTException {
+	public CalcifiedRoutine() throws AWTException {
 
 	}
 
@@ -58,52 +57,13 @@ public class HighAlchRoutine extends Routine {
 				while (running) {
 					checkIfPausedOrStopped();
                                         
-					/** Start routine here. **/
-					// F5 = Inv, F6 = Equipment, F7 = SpellBook.
-					// Move to starting spot.
-                                        /* //## Uncomment section if reverting back to old routine. Temporarily changing. 
-					bookStillLoading = true;
-					bot.delay(250);
-					// System.out.println("Moving to alch spot. ");
-					if (!((bot.getCurrentMousePosition(X) >= alchX - 2 && bot.getCurrentMousePosition(X) <= alchX + 2)
-							&& (bot.getCurrentMousePosition(Y) >= alchY - 2
-									&& bot.getCurrentMousePosition(Y) <= alchY + 2))) {
-						bot.accuratelyMoveCursor(alchX, alchY);
-						bot.delay(random.nextInt(500) + 500);
-					}
-
-					// For random taking a break and readjusting mouse.
-					if (random.nextInt(130) == 25) {
-						System.out.println("Moving mouse. ");
-						bot.moveCursorTo(random.nextInt(50) + 1700, random.nextInt(300) + 300);
-						Thread.sleep(random.nextInt(4000) + 4000);
-						bot.accuratelyMoveCursor(alchX, alchY);
-						bot.delay(random.nextInt(500) + 500);
-					}
-
-					// For readjusting mouse.
-					if (random.nextInt(80) == 10) {
-						System.out.println("Readjusting mouse. ");
-						bot.accuratelyMoveCursor(alchX, alchY);
-						bot.delay(random.nextInt(500) + 500);
-					}
-
-					// Cast High Alch.
-					// switchTo(BOOK);
-					bot.mouseClick();
-					bot.delay(random.nextInt(500) + 500);
-					bot.mouseClick();
-					bot.delay(random.nextInt(500) + 500);
-
-					// Check if finished casting.
-					checkIfStillCasting();
-                                        */ //##Uncomment above for old routine. 
-					/** End routine here. **/
-					//bot.delay(random.nextInt(500) + 500);
-                                        
-                                        if (numberToAlch <= 0) {
-                                            break;
-                                        }
+                                        //if (isMining()) {
+                                        //  if (!veinIsDepleted()) {
+                                        //      veinIsDepleted = veinIsDepleted();
+                                        //  {
+                                        //{ else {
+                                        //
+                                        //{
                                         bot.mouseClick();
 					bot.delay(random.nextInt(754) + 643);
 					bot.mouseClick();

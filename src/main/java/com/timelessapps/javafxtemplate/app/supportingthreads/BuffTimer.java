@@ -17,7 +17,7 @@ public class BuffTimer extends Thread {
 	int timeToWait;
 	Buff buff;
 	String mainBotState;
-	String meleeState;
+	String meleeState = "TIMED_WAITING";
 
 	public BuffTimer(MainBotRoutine mainBotRoutine, int timeToWait, Buff buff) {
 		this.mainBotRoutine = mainBotRoutine;
@@ -45,7 +45,12 @@ public class BuffTimer extends Thread {
 		log.appendToEventLogsFile("The timer for " + buff + " has expired. ");
 
 		mainBotState = mainBotRoutine.getState().toString();
-		meleeState = meleeRoutine.getState().toString();
+                try {
+                    meleeState = meleeRoutine.getState().toString();
+                } catch (Exception xx) {
+			System.out.println("No melee state");
+		}
+		
 
 		switch (buff) {
 		case ABSORB:
@@ -85,19 +90,24 @@ public class BuffTimer extends Thread {
 			} catch (FileNotFoundException ex) {
 				Logger.getLogger(BuffTimer.class.getName()).log(Level.SEVERE, null, ex);
 			}
+                        break;
 		}
-			
+		
 		case AGGRO:
 			while (!(meleeState.equals("TIMED_WAITING"))) {
 				try {
-					Thread.sleep(100);
+                                    Thread.sleep(100);
 				} catch (InterruptedException ex) {
 					Logger.getLogger(BuffTimer.class.getName()).log(Level.SEVERE, null, ex);
 				}
-
-				meleeState = meleeRoutine.getState().toString();
+                                try {
+                                    meleeState = meleeRoutine.getState().toString();
+                                } catch (Exception exxx) {
+                                    System.out.println(exxx);
+                                }
 			} {
 			meleeRoutine.setShouldResetAggro(true);
+                
 		}
 			/*
 			 * try { log.

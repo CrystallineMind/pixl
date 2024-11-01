@@ -19,6 +19,9 @@ import main.java.com.timelessapps.javafxtemplate.helpers.services.CustomSceneHel
 import main.java.com.timelessapps.javafxtemplate.helpers.services.LoggingService;
 import main.java.com.timelessapps.javafxtemplate.helpers.services.RobotService;
 
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
+
 public class MainBotRoutine extends Routine 
 {
    //This class is for NMZ
@@ -60,6 +63,12 @@ public class MainBotRoutine extends Routine
 					    setShouldOverload(false);
 					    moveToOverload();
 					    bot.delay(100);
+                                            System.out.println("Drinking overload");
+
+                                            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+                                            LocalDateTime now = LocalDateTime.now();  
+                                            System.out.println("Current Date and Time: " + dtf.format(now));  
+
 					    drinkOverload();
 					    BuffTimer overloadTimer = new BuffTimer(this, 300800, OVERLOAD); //300800
 					    overloadTimer.setDaemon(true);
@@ -71,8 +80,14 @@ public class MainBotRoutine extends Routine
 					    setShouldAbsorb(false);
 					    moveToAbsorb();
 					    bot.delay(100);
+                                            System.out.println("Drinking absorb");
+
+                                            DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+                                            LocalDateTime now2 = LocalDateTime.now();  
+                                            System.out.println("Current Date and Time: " + dtf2.format(now2));  
+
 					    drinkAbsorb();
-					    BuffTimer absorbTimer = new BuffTimer(this, 580000, ABSORB); //301000. Works with dhide at 302300, 500000 works for full rune at 45 def
+					    BuffTimer absorbTimer = new BuffTimer(this, 280000, ABSORB); //301000. Works with dhide at 302300, 500000 works for full rune at 45 def
 					    absorbTimer.setDaemon(true);
 					    absorbTimer.start();
 					}
@@ -177,8 +192,11 @@ public class MainBotRoutine extends Routine
 	*/
     
     //Change this according to where Pray center is. 
-    int invXOffset = 1176; 
-    int invYOffset = 245;
+    //int invXOffset = 1176; 
+    //int invYOffset = 245;
+    //In new fixed layout RL with exp tab open
+    int invXOffset = 998; 
+    int invYOffset = 115;
     
     int prayButtonX = invXOffset;
     int prayButtonY = invYOffset;
@@ -187,7 +205,7 @@ public class MainBotRoutine extends Routine
     //int HPIconY = 207;
     
     //int hpColor = 50;
-	
+	/*
 	//After subtracting by reference point. 
 	int[][] absorbSlots = new int[][] 
 	{
@@ -196,7 +214,7 @@ public class MainBotRoutine extends Routine
 		{27+invXOffset, 267+invYOffset},   {80+invXOffset, 267+invYOffset},   {131+invXOffset, 267+invYOffset},   {185+invXOffset, 223+invYOffset},
 		{27+invXOffset, 312+invYOffset},   {80+invXOffset, 312+invYOffset},   {131+invXOffset, 312+invYOffset},   {185+invXOffset, 312+invYOffset},
 		{27+invXOffset, 358+invYOffset},   {80+invXOffset, 358+invYOffset},   {131+invXOffset, 358+invYOffset},   {185+invXOffset, 358+invYOffset}
-		/* {27+invXOffset, 401+invYOffset},   {80+invXOffset, 401+invYOffset} */
+		//{27+invXOffset, 401+invYOffset},   {80+invXOffset, 401+invYOffset}
 	};
 	
 	int [][] overloadSlots = new int[][]
@@ -210,6 +228,31 @@ public class MainBotRoutine extends Routine
 		
 	{
 		{185+invXOffset, 448+invYOffset}
+	};
+        */
+
+        //After subtracting by reference point. New vm + RL coords
+	int[][] absorbSlots = new int[][] 
+	{
+		{21+invXOffset, 142+invYOffset},   {64+invXOffset, 142+invYOffset},   {105+invXOffset, 142+invYOffset},   {146+invXOffset, 142+invYOffset},
+		{21+invXOffset, 179+invYOffset},   {64+invXOffset, 179+invYOffset},   {105+invXOffset, 179+invYOffset},   {146+invXOffset, 179+invYOffset},
+		{21+invXOffset, 213+invYOffset},   {64+invXOffset, 213+invYOffset},   {105+invXOffset, 213+invYOffset},   {146+invXOffset, 213+invYOffset},
+		{21+invXOffset, 250+invYOffset},   {64+invXOffset, 250+invYOffset},   {105+invXOffset, 250+invYOffset},   {146+invXOffset, 250+invYOffset},
+		{21+invXOffset, 287+invYOffset},   {64+invXOffset, 287+invYOffset},   {105+invXOffset, 287+invYOffset},   {146+invXOffset, 287+invYOffset}
+		//{21+invXOffset, 324+invYOffset},   {64+invXOffset, 324+invYOffset}
+	};
+	
+	int [][] overloadSlots = new int[][]
+	{
+	    {21+invXOffset, 325+invYOffset},   {64+invXOffset, 325+invYOffset},   {105+invXOffset, 325+invYOffset},   {146+invXOffset, 325+invYOffset},
+		//{21+invXOffset, 359+invYOffset},   {64+invXOffset, 359+invYOffset},   {105+invXOffset, 359+invYOffset}
+	};
+	
+	//Can make this regular array, but just keeping it 2d for consistency sake. 
+	int [][] rockCakeSlot = new int[][]
+		
+	{
+		{146+invXOffset, 324+invYOffset}
 	};
     
     public void moveToPrayButton()
