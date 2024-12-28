@@ -1,16 +1,13 @@
-#main
-{
+#main {
     /* -fx-background-color: #1E1F23; */
 }
 
-.purpleBorder
-{
+.purpleBorder {
     -fx-border-color: #B803AB;
     -fx-border-width: 1px;
 }
 
-.defaultBorder
-{
+.defaultBorder {
     -fx-border-color: black;
     -fx-border-width: 1px;
 }

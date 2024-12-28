@@ -7,7 +7,6 @@
 package main.java.com.timelessapps.javafxtemplate.app.businesslogic;
 
 /**
- *
  * @author mtsao
  */
 public class MB {

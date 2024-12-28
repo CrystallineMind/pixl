@@ -5,25 +5,24 @@
  */
 package main.java.com.timelessapps.javafxtemplate.controllers.contentarea;
 
+import javafx.fxml.Initializable;
+
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
 
 /**
  * FXML Controller class
  *
  * @author Max
  */
-public class ApplicationPageController implements Initializable
-{
+public class ApplicationPageController implements Initializable {
 
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
 }
