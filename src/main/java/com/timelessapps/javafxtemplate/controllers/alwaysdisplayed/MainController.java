@@ -24,7 +24,7 @@ public class MainController implements Initializable {
         if (focused) {
             mainWindow.getStyleClass().add("purpleBorder");
             mainWindow.getStyleClass().remove("defaultBorder");
-        } else if (!focused) {
+        } else {
             mainWindow.getStyleClass().remove("purpleBorder");
         }
     }

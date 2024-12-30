@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 <AnchorPane layoutX="1.0" layoutY="60.0" prefHeight="340.0" prefWidth="150.0" style="-fx-background-color: #2A2B31;"
-            xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="main.java.com.timelessapps.javafxtemplate.controllers.alwaysdisplayed.LeftMenuPaneController">
     <children>
         <Button id="homeButton" fx:id="homeButton" layoutX="5.0" layoutY="5.0" mnemonicParsing="false"

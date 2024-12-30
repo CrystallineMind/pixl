@@ -4,7 +4,7 @@
 <?import java.net.URL?>
 <AnchorPane id="generalSettingsPage" fx:id="generalSettingsPage" prefHeight="362.0" prefWidth="440.0"
             style="-fx-background-color: white;" styleClass="generalSettingsPage"
-            xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="main.java.com.timelessapps.javafxtemplate.controllers.contentarea.GeneralSettingsPageController">
     <stylesheets>
         <URL value="@/main/java/com/timelessapps/javafxtemplate/view/css/contentarea/GeneralSettingsPage.css"/>

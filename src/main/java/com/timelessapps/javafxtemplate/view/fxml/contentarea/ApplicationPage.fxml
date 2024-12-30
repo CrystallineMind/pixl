@@ -3,8 +3,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import java.net.URL?>
 <AnchorPane id="applicationPage" fx:id="applicationPage" prefHeight="362.0" prefWidth="440.0"
-            style="-fx-background-color: #1E1F23;" styleClass="applicationPage" xmlns="http://javafx.com/javafx/8.0.111"
-            xmlns:fx="http://javafx.com/fxml/1"
+            style="-fx-background-color: #1E1F23;" styleClass="applicationPage" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
             fx:controller="main.java.com.timelessapps.javafxtemplate.controllers.contentarea.HomePageController">
     <stylesheets>
         <URL value="@/main/java/com/timelessapps/javafxtemplate/view/css/contentarea/HomePage.css"/>

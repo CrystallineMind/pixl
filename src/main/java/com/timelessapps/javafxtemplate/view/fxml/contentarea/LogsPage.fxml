@@ -5,7 +5,7 @@
 <?import javafx.scene.text.Font?>
 <?import java.net.URL?>
 <AnchorPane id="logsPage" fx:id="logsPage" prefHeight="362.0" prefWidth="440.0" style="-fx-background-color: #1E1F23;"
-            styleClass="logsPage" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
+            styleClass="logsPage" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="main.java.com.timelessapps.javafxtemplate.controllers.contentarea.LogsPageController">
     <stylesheets>
         <URL value="@/main/java/com/timelessapps/javafxtemplate/view/css/contentarea/LogsPage.css"/>

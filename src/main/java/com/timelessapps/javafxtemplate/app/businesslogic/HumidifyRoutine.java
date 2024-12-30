@@ -24,8 +24,8 @@ public class HumidifyRoutine extends Routine {
     int[] closeBankX = {1084, 1093};
     int[] closeBankY = {158, 160};
 
-    int clayX[] = {646, 654};
-    int clayY[] = {254, 255};
+    int[] clayX = {646, 654};
+    int[] clayY = {254, 255};
 
     int humidifyX = 1282;
     int humidifyY = 435;

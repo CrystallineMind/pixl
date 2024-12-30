@@ -5,6 +5,7 @@
  */
 package main.java.com.timelessapps.javafxtemplate;
 
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import main.java.com.timelessapps.javafxtemplate.app.businesslogic.*;
 import main.java.com.timelessapps.javafxtemplate.app.supportingthreads.GlobalKeyListener;
+import main.java.com.timelessapps.javafxtemplate.helpers.ImageDataProcessor;
 import main.java.com.timelessapps.javafxtemplate.helpers.OCR.RSImageReader;
 import main.java.com.timelessapps.javafxtemplate.helpers.coords.RSCoordinates;
 
@@ -21,6 +23,7 @@ import java.awt.*;
 public class Main extends Application {
     private static Stage stage;
     private static Scene scene;
+    private final ImageDataProcessor imageDataProcessor = new ImageDataProcessor();
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -33,6 +36,8 @@ public class Main extends Application {
 
         stage.setScene(scene);
         stage.show();
+        imageDataProcessor.screenCapture();
+
     }
 
     //If no argument, launch with JavaFX UI, else just do the routine. 
@@ -41,63 +46,68 @@ public class Main extends Application {
             launch(args);
         } else {
             try {
-                if (args[0].equals("snmz")) {
-                    System.out.println("Starting SNMZ routine");
-                    SimpleNMZRoutine simpleNMZRoutine = new SimpleNMZRoutine(); //pass and gp
-                    simpleNMZRoutine.setDaemon(true);
-                    simpleNMZRoutine.start();
+                switch (args[0]) {
+                    case "snmz": {
+                        System.out.println("Starting SNMZ routine");
+                        SimpleNMZRoutine simpleNMZRoutine = new SimpleNMZRoutine(); //pass and gp
 
-                    GlobalKeyListener globalKeyListener = new GlobalKeyListener(simpleNMZRoutine);
-                    globalKeyListener.setDaemon(true);
-                    globalKeyListener.start();
+                        simpleNMZRoutine.setDaemon(true);
+                        simpleNMZRoutine.start();
 
-                    simpleNMZRoutine.join();
-                    System.out.println("Completed SNMZ routine, shutting down. ");
-                    System.exit(0);
-                }
-                if (args[0].equals("ge")) {
-                    System.out.println("Starting GE routine");
-                    GrandExchangeRoutine grandExchangeRoutine = new GrandExchangeRoutine(args[1]); //pass and gp
-                    grandExchangeRoutine.setDaemon(true);
-                    grandExchangeRoutine.start();
+                        GlobalKeyListener globalKeyListener = new GlobalKeyListener(simpleNMZRoutine);
+                        globalKeyListener.setDaemon(true);
+                        globalKeyListener.start();
 
-                    GlobalKeyListener globalKeyListener = new GlobalKeyListener(grandExchangeRoutine);
-                    globalKeyListener.setDaemon(true);
-                    globalKeyListener.start();
+                        simpleNMZRoutine.join();
+                        System.out.println("Completed SNMZ routine, shutting down. ");
+                        System.exit(0);
+                    }
+                    case "ge": {
+                        System.out.println("Starting GE routine");
+                        GrandExchangeRoutine grandExchangeRoutine = new GrandExchangeRoutine(args[1]); //pass and gp
 
-                    grandExchangeRoutine.join();
-                    System.out.println("Completed GE routine, shutting down. ");
-                    System.exit(0);
-                }
-                if (args[0].equals("melee")) {
-                    RSImageReader rsir = new RSImageReader();
-                    RSCoordinates rsc = new RSCoordinates();
-                    Color black = new Color(0, 0, 0);
-	        		
+                        grandExchangeRoutine.setDaemon(true);
+                        grandExchangeRoutine.start();
+
+                        GlobalKeyListener globalKeyListener = new GlobalKeyListener(grandExchangeRoutine);
+                        globalKeyListener.setDaemon(true);
+                        globalKeyListener.start();
+
+                        grandExchangeRoutine.join();
+                        System.out.println("Completed GE routine, shutting down. ");
+                        System.exit(0);
+                    }
+                    case "melee": {
+                        RSImageReader rsir = new RSImageReader();
+                        RSCoordinates rsc = new RSCoordinates();
+                        Color black = new Color(0, 0, 0);
+
 	        		/*
 	        		System.out.println("Question1 Text: " + rsir.getRSQuestionsText(rsc.question1Of2(), black));
 	        		System.out.println("Question2 Text: " + rsir.getRSQuestionsText(rsc.question2Of2(), black));
 	        		System.out.println("==");
 	        		System.out.println("Question1 Text: " + rsir.getRSQuestionsText(rsc.question1Of3(), black));
 	        		System.out.println("Question2 Text: " + rsir.getRSQuestionsText(rsc.question2Of3(), black));
-	        		System.out.println("Question3 Text: " + rsir.getRSQuestionsText(rsc.question3Of3(), black)); 
+	        		System.out.println("Question3 Text: " + rsir.getRSQuestionsText(rsc.question3Of3(), black));
 	        		*/
-                    //MeleeRoutine meleeRoutine = new MeleeRoutine(args[1]); //pass and gp
-                    //meleeRoutine.test();
+                        //MeleeRoutine meleeRoutine = new MeleeRoutine(args[1]); //pass and gp
+                        //meleeRoutine.test();
 
-                    System.out.println("Starting melee routine");
-                    MeleeRoutine meleeRoutine = new MeleeRoutine(args[1]); //pass and gp
-                    meleeRoutine.setDaemon(true);
-                    meleeRoutine.start();
+                        System.out.println("Starting melee routine");
+                        MeleeRoutine meleeRoutine = new MeleeRoutine(args[1]); //pass and gp
 
-                    GlobalKeyListener globalKeyListener = new GlobalKeyListener(meleeRoutine);
-                    globalKeyListener.setDaemon(true);
-                    globalKeyListener.start();
+                        meleeRoutine.setDaemon(true);
+                        meleeRoutine.start();
 
-                    meleeRoutine.join();
-                    System.out.println("Completed melee routine, shutting down. ");
-                    System.exit(0);
+                        GlobalKeyListener globalKeyListener = new GlobalKeyListener(meleeRoutine);
+                        globalKeyListener.setDaemon(true);
+                        globalKeyListener.start();
 
+                        meleeRoutine.join();
+                        System.out.println("Completed melee routine, shutting down. ");
+                        System.exit(0);
+
+                    }
                 }
                 if (args[0].contentEquals("patrol")) {
                     System.out.println("Starting patrol routine");
