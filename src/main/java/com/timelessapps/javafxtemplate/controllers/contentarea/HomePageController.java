@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import main.java.com.timelessapps.javafxtemplate.app.businesslogic.*;
 import main.java.com.timelessapps.javafxtemplate.app.supportingthreads.GlobalKeyListener;
+import main.java.com.timelessapps.javafxtemplate.helpers.DataCoordinates;
 import main.java.com.timelessapps.javafxtemplate.helpers.services.LoggingService;
 import main.java.com.timelessapps.javafxtemplate.helpers.services.RobotService;
 
@@ -32,17 +33,8 @@ public class HomePageController implements Initializable {
 
     //For NMZ
     @FXML
-    public void startApplication(MouseEvent event) throws InterruptedException, AWTException {
-        MainBotRoutine mainBotRoutine = new MainBotRoutine();
-        mainBotRoutine.setDaemon(true);
-        mainBotRoutine.start();
-
-        GlobalKeyListener globalKeyListener = new GlobalKeyListener(mainBotRoutine);
-        globalKeyListener.setDaemon(true);
-        globalKeyListener.start();
-
-        // botRoutine.join();
-        // System.out.println("Remember to re-active button. ");
+    public void startApplication() {
+        DataCoordinates.configureDataCoords(123, true);
     }
 
     @FXML
