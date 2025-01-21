@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import java.net.URL?>
+<AnchorPane id="generalSettingsPage" fx:id="generalSettingsPage" prefHeight="362.0" prefWidth="440.0"
+            style="-fx-background-color: white;" styleClass="generalSettingsPage"
+            xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.xerxes.javafxtemplate.controllers.contentarea.GeneralSettingsPageController">
+    <stylesheets>
+        <URL value="@/com/xerxes/javafxtemplate/view/css/contentarea/GeneralSettingsPage.css"/>
+    </stylesheets>
+</AnchorPane>

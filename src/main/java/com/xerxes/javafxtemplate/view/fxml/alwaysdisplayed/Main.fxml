@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import java.lang.String?>
+<AnchorPane id="main" fx:id="mainWindow" prefHeight="375.0" prefWidth="600.0" style="-fx-background-color: #1E1F23;"
+            stylesheets="@/com/xerxes/javafxtemplate/view/css/alwaysdisplayed/Main.css"
+            xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.xerxes.javafxtemplate.controllers.alwaysdisplayed.MainController">
+    <children>
+        <fx:include source="TitleBar.fxml"/>
+        <fx:include source="LeftMenuPane.fxml"/>
+        <fx:include source="TopMenuPane.fxml"/>
+        <fx:include source="ContentAreaPane.fxml"/>
+    </children>
+    <styleClass>
+        <String fx:value="main"/>
+        <String fx:value="defaultBorder"/>
+    </styleClass>
+</AnchorPane>

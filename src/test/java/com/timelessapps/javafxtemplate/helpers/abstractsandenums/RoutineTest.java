@@ -1,6 +1,6 @@
-package test.java.com.timelessapps.javafxtemplate.helpers.abstractsandenums;
+package com.timelessapps.javafxtemplate.helpers.abstractsandenums;
 
-import main.java.com.timelessapps.javafxtemplate.helpers.abstractsandenums.Routine;
+import com.xerxes.javafxtemplate.helpers.abstractsandenums.Routine;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

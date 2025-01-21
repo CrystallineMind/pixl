@@ -2,9 +2,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>javafxtemplate</groupId>
-    <artifactId>botforfun</artifactId>
+    <artifactId>XERXES-8933AA</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>botforfun</name>
+    <name>XERXES-8933AA</name>
     <description>Template for future JavaFX projects.</description>
     <properties>
         <maven.compiler.source>23</maven.compiler.source>
@@ -54,35 +54,35 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx</artifactId>
-            <version>24-ea+19</version>
+            <version>23.0.1</version>
             <type>pom</type>
         </dependency>
 
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>24-ea+19</version>
+            <version>23.0.1</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-graphics -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
-            <version>24-ea+19</version>
+            <version>23.0.1</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-base -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-base</artifactId>
-            <version>24-ea+19</version>
+            <version>23.0.1</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-fxml -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>24-ea+19</version>
+            <version>23.0.1</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
         <dependency>

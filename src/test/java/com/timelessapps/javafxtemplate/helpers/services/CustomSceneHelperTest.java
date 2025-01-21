@@ -1,6 +1,6 @@
-package test.java.com.timelessapps.javafxtemplate.helpers.services;
+package com.timelessapps.javafxtemplate.helpers.services;
 
-import main.java.com.timelessapps.javafxtemplate.helpers.services.CustomSceneHelper;
+import com.xerxes.javafxtemplate.helpers.services.CustomSceneHelper;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

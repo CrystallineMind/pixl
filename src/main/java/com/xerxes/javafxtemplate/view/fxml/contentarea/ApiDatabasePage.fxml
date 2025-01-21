@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import java.net.URL?>
+<AnchorPane id="apiDatabasePage" fx:id="apiDatabasePage" prefHeight="362.0" prefWidth="440.0"
+            style="-fx-background-color: #1E1F23;" styleClass="apiDatabasePage" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.xerxes.javafxtemplate.controllers.contentarea.ApiDatabasePageController">
+    <stylesheets>
+        <URL value="@/com/xerxes/javafxtemplate/view/css/contentarea/ApiDatabasePage.css"/>
+    </stylesheets>
+</AnchorPane>
